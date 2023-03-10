@@ -50,9 +50,10 @@
             </ion-input>
           </ion-col>
           <ion-col size="12" class="my-2">
-            <ion-input style="color: #000 ;" [ngClass]="getClass(f['userPassword'])" minLength="6" formControlName="userPassword" class="px-1" type="password"
+            <ion-input style="color: #000 ;" [ngClass]="getClass(f['userPassword'])" minLength="8" maxLegth="16" formControlName="userPassword" class="px-1" type="password"
               placeholder="Password">
             </ion-input>
+            <small class="text-danger">{{f['userPassword'].errors?.['error']}}</small>
           </ion-col>
 
           <ion-col size="12" class="my-2">

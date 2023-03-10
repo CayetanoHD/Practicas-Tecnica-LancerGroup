@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ResponseCodeEnum } from 'src/app/core/enums/responseCode.enum';
@@ -14,7 +14,7 @@ import { LoadingControllerService } from 'src/app/core/services/ionic-components
   templateUrl: './sign-up.page.html',
   styleUrls: ['./sign-up.page.scss'],
 })
-export class SignUpPage implements OnInit {
+export class SignUpPage implements OnInit, OnDestroy {
 
   form: FormGroup;
   model: UserSignUp = {
@@ -37,6 +37,9 @@ export class SignUpPage implements OnInit {
     private router: Router
   ) {
 
+  }
+  ngOnDestroy(): void {
+    this.clear();
   }
 
   ngOnInit() {
@@ -68,9 +71,43 @@ export class SignUpPage implements OnInit {
           userEmail?.setErrors(null);
         }
       }
-    })
+    });
+
+    this.form.controls['userPassword'].valueChanges.subscribe({
+      next: (value) => {
+        const userPass = this.form.get('userPassword');
+        if(value.length < 8){
+          userPass?.setErrors({error: 'MinLegth is 8'});
+          return;
+        }
+        else if (value.length > 8 && value.length > 16){
+          userPass?.setErrors({error: 'MaxLength is 16'});
+          return
+        }
+        else{
+          userPass?.setErrors(null);
+        }
+
+        debugger;
+        let containsLettersAndNumbers = this.containsLettersAndNumber(value)
+
+        if(!containsLettersAndNumbers){
+          userPass?.setErrors({error: 'the password must contains letters and numbers'});
+        }
+        else{
+          userPass?.setErrors(null);
+        }
+        
+      }
+    });
   }
 
+  containsLettersAndNumber(value: string) {
+    const numbers = /^[0-9]/.test(value);
+    const letters = /[-Za-z0-9]/.test(value);
+
+    return numbers && letters;
+  }
 
   signUp() {
 
