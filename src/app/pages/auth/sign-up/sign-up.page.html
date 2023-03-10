@@ -1,9 +1,92 @@
-<ion-header>
+<ion-header class="ion-no-border animate__animated  animate__zoomIn">
   <ion-toolbar>
-    <ion-title>signUp</ion-title>
+    <ion-title color="danger">Sing Up</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="login" text=""></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="bg mb-5 animate__animated animate__zoomIn">
+
+  <ion-card class="ion-no-margin">
+    <!-- <ion-img src="assets/images/header1.png">
+    </ion-img> -->
+    <ion-img class="w-75 ms-4 mt-5" src="assets/images/lancer.png"></ion-img>
+    <ion-card-header>
+      <ion-card-title>
+        Sign Up
+      </ion-card-title>
+      <ion-card-subtitle class="p">
+        Create your account by filling up the form.
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+
+      <form [formGroup]="form">
+        <ion-row>
+          <ion-col size="12" class="">
+            <ion-input style="color: #000 ;" [ngClass]="getClass(f['userName'])"  minLength="4" maxLength="30" formControlName="userName" class="px-1" type="text"
+              placeholder="Name">
+            </ion-input>
+            <small>{{f['userName'].value?.length}}/30</small>
+          </ion-col>
+          <ion-col size="12" class="">
+            <ion-input style="color: #000 ;" [ngClass]="getClass(f['userLastName'])" minLength="4" maxLength="30" formControlName="userLastName" class="px-1" type="text"
+              placeholder="Last Name">
+            </ion-input>
+            <small>{{f['userLastName'].value?.length}}/30</small>
+          </ion-col>
+          <ion-col size="12" class="">
+          <ion-input style="color: #000 ;" [ngClass]="getClass(f['userEmail'])" minLength="4" formControlName="userEmail" class="px-1" type="email"
+              placeholder="Email">
+            </ion-input>
+          </ion-col>
+          <small class="text-danger">{{f['userEmail'].errors?.['notValid']}}</small>
+
+          <ion-col size="12" class="">
+            <ion-input style="color: #000 ;" [ngClass]="getClass(f['userPhoneNumber'])"  minLength="10" formControlName="userPhoneNumber" class="px-1" type="text"
+              placeholder="Phone Number">
+            </ion-input>
+          </ion-col>
+          <ion-col size="12" class="my-2">
+            <ion-input style="color: #000 ;" [ngClass]="getClass(f['userPassword'])" minLength="6" formControlName="userPassword" class="px-1" type="password"
+              placeholder="Password">
+            </ion-input>
+          </ion-col>
+
+          <ion-col size="12" class="my-2">
+            <ion-input style="color: #000 ;" [ngClass]="getClass(f['userPasswordConfirm'])" minLength="6" formControlName="userPasswordConfirm" class="px-1" type="password"
+              placeholder="Confirm Password">
+            </ion-input>
+            <small class="text-danger">{{f['userPasswordConfirm'].errors?.['notMatch']}}</small>
+          </ion-col>
+
+
+          <ion-list-header mode="ios">
+            <ion-label>Select a picture to upload</ion-label>
+          </ion-list-header>
+          <ion-col size="12" class="my-2">
+            <ion-input (change)="uploadPhoto($event)" accept=".png,.jpg,.jpeg,.gif" style="color: #000 ;" class="px-1" type="file"
+              placeholder="Selec">
+            </ion-input>
+          </ion-col>
+        </ion-row>
+      </form>
+    </ion-card-content>
+    <div class="d-flex justify-content-center mb-5">
+
+      <ion-row >
+        <ion-col size="12" class="center">
+          <ion-button (click)="signUp()" [disabled]="!form.valid" fill="solid" color="primary" shape="round">Create</ion-button>
+        </ion-col>
+
+        <ion-col size="12" class="center">
+          <ion-button fill="outline" color="dark" shape="round" (click)="redirectToSignIn()" >Back to Login</ion-button>
+        </ion-col>
+      </ion-row>
+
+    </div>
+  </ion-card>
 
 </ion-content>

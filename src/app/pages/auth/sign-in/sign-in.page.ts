@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ResponseCodeEnum } from 'src/app/core/enums/responseCode.enum';
 import { LoginResponse } from 'src/app/core/models/loginResponse.model';
 import { UserLogin } from 'src/app/core/models/userLogin.model';
@@ -25,6 +26,7 @@ export class SignInPage implements OnInit {
     private authService: AuthService, 
     private loadingCtrl: LoadingControllerService,
     private alertCtrl: AlertControllerService,
+    private router: Router
     ) { 
 
   }
@@ -35,7 +37,7 @@ export class SignInPage implements OnInit {
   }
 
   signIn(){
-    debugger;
+    
     if(this.form.valid){
       this.loadingCtrl.show();
       this.authService.signIn(this.form.value).subscribe({
@@ -58,5 +60,9 @@ export class SignInPage implements OnInit {
 
   loginSuccess(response: LoginResponse){
     this.alertCtrl.show('Bienvenido', response.User.custumerName)
+  }
+
+  redirectToSignUp(){
+    this.router.navigate(['auth/sign-up']);
   }
 }

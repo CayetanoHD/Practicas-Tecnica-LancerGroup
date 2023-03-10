@@ -36,3 +36,17 @@ ion-input {
     font-size: 13.33px !important;
     line-height: 120% !important;
 }
+
+.border-danger {
+    border: 1px solid red!important;
+}
+
+.border-success {
+    border:  1px solid green!important;
+}
+
+.center{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
