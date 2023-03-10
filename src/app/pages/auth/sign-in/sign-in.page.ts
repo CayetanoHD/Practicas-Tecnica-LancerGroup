@@ -10,6 +10,9 @@ import { FormsHelper } from '../../../core/helpers/forms.helper';
 import { AlertControllerService } from '../../../core/services/ionic-components/alert-controller.service';
 import { StorageHelper } from '../../../core/helpers/storage.helper';
 import { StorageEnum } from '../../../core/enums/storage.enum';
+import { NativeBiometricHelper } from '../../../core/helpers/native-biometric.helper';
+import { Platform } from '@ionic/angular';
+import { RuntimePlatformHelper } from 'src/app/core/helpers/runtime-platform.helper';
 
 @Component({
   selector: 'app-sign-in',
@@ -29,7 +32,10 @@ export class SignInPage implements OnInit {
     private loadingCtrl: LoadingControllerService,
     private alertCtrl: AlertControllerService,
     private router: Router,
-    private storage: StorageHelper
+    private storage: StorageHelper,
+    private nativeBiometric: NativeBiometricHelper,
+    private platform: RuntimePlatformHelper,
+
     ) { 
 
   }
@@ -61,11 +67,37 @@ export class SignInPage implements OnInit {
     }
   }
 
-   loginSuccess(response: LoginResponse){
-    this.alertCtrl.show('Bienvenido', response.User.custumerName).then(async ()=> {
+   async loginSuccess(response: LoginResponse){
       await this.storage.setStorageKey(StorageEnum.USERDATA, response);
-      this.router.navigate(['home/profile']);
-    })
+      this.openNativeBiometric()
+  }
+
+  async openNativeBiometric() {
+    if (this.platform.getPlatformName() == 'web') {
+      this.alertCtrl.error(
+        'Biometric is not available',
+        'Biometric is not available in web version'
+      ).then(()=> {
+        this.router.navigate(['home/profile'])
+      });
+      return;
+    }
+
+    const isAvailable = await this.nativeBiometric.isAvailable();
+    if (isAvailable.isAvailable) {
+      await this.nativeBiometric
+        .verifyIdentity({
+          title: 'LancerGroup App',
+          description: 'Your biometric data will be used for authentication on this device',
+        })
+        .then(async () => {
+            this.alertCtrl.show('Biometric', 'Biometric success').then(()=> {
+              this.router.navigate(['home/profile'])
+            });
+        })
+        .catch((error) => {
+        });
+    }
   }
 
   redirectToSignUp(){

@@ -5,7 +5,9 @@ import { CanActivateGuard } from './core/guard/can-activate.guard';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
+    redirectTo:'auth/sign-in',
+    pathMatch:'full',
+    
   },
   {
     path: 'auth',
