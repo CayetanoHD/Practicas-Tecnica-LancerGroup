@@ -11,7 +11,7 @@
 
 /* Core CSS required for Ionic components to work properly */
 @import "~@ionic/angular/css/core.css";
-
+@import url('./assets/css/bootstrap.min.css');
 /* Basic CSS for apps built with Ionic */
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
@@ -24,3 +24,15 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+ion-input {
+    height: 56px !important;
+    background: #D5D5D5 !important;
+    border-radius: 8px !important;
+    -webkit-padding-start: 20px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    font-size: 13.33px !important;
+    line-height: 120% !important;
+}
