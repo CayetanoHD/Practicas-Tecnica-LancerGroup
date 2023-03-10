@@ -8,6 +8,7 @@ import { AuthPageRoutingModule } from './auth-routing.module';
 
 import { AuthPage } from './auth.page';
 import { FormsHelper } from '../../core/helpers/forms.helper';
+import { GeoLocationHelper } from 'src/app/core/helpers/geoLocationHelper';
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import { FormsHelper } from '../../core/helpers/forms.helper';
     ReactiveFormsModule
   ],
   declarations: [AuthPage],
-  providers:[FormsHelper]
+  providers:[FormsHelper, GeoLocationHelper]
 })
 export class AuthPageModule {}

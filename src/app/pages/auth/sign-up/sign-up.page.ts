@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ResponseCodeEnum } from 'src/app/core/enums/responseCode.enum';
+import { StorageEnum } from 'src/app/core/enums/storage.enum';
 import { FormsHelper } from 'src/app/core/helpers/forms.helper';
+import { GeoLocationHelper } from 'src/app/core/helpers/geoLocationHelper';
 import { LoginResponse } from 'src/app/core/models/loginResponse.model';
 import { UserSignUp } from 'src/app/core/models/userSignUp.model';
 import { AuthService } from 'src/app/core/services/authService/auth.service';
 import { AlertControllerService } from 'src/app/core/services/ionic-components/alert-controller.service';
 import { LoadingControllerService } from 'src/app/core/services/ionic-components/loading-controller.service';
+import { StorageHelper } from '../../../core/helpers/storage.helper';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.page.html',
   styleUrls: ['./sign-up.page.scss'],
 })
-export class SignUpPage implements OnInit {
+export class SignUpPage implements OnInit, OnDestroy {
 
   form: FormGroup;
   model: UserSignUp = {
@@ -34,9 +37,14 @@ export class SignUpPage implements OnInit {
     private authService: AuthService,
     private loadingCtrl: LoadingControllerService,
     private alertCtrl: AlertControllerService,
-    private router: Router
+    private router: Router,
+    private geoHelper: GeoLocationHelper,
+    private storage: StorageHelper
   ) {
 
+  }
+  ngOnDestroy(): void {
+    this.clear();
   }
 
   ngOnInit() {
@@ -68,9 +76,43 @@ export class SignUpPage implements OnInit {
           userEmail?.setErrors(null);
         }
       }
-    })
+    });
+
+    this.form.controls['userPassword'].valueChanges.subscribe({
+      next: (value) => {
+        const userPass = this.form.get('userPassword');
+        if(value.length < 8){
+          userPass?.setErrors({error: 'MinLegth is 8'});
+          return;
+        }
+        else if (value.length > 8 && value.length > 16){
+          userPass?.setErrors({error: 'MaxLength is 16'});
+          return
+        }
+        else{
+          userPass?.setErrors(null);
+        }
+
+        debugger;
+        let containsLettersAndNumbers = this.containsLettersAndNumber(value)
+
+        if(!containsLettersAndNumbers){
+          userPass?.setErrors({error: 'the password must contains letters and numbers'});
+        }
+        else{
+          userPass?.setErrors(null);
+        }
+        
+      }
+    });
   }
 
+  containsLettersAndNumber(value: string) {
+    const numbers = /^[0-9]/.test(value);
+    const letters = /[-Za-z0-9]/.test(value);
+
+    return numbers && letters;
+  }
 
   signUp() {
 
@@ -101,11 +143,14 @@ export class SignUpPage implements OnInit {
     }
   }
 
-  signUpSuccess(response: LoginResponse) {
+  async signUpSuccess(response: LoginResponse) {
+    let location = await this.geoHelper.printCurrentPosition();
+    await this.storage.setStorageKey(StorageEnum.GEOLOCATION, location);
+    await this.storage.setStorageKey(StorageEnum.USERDATA, response);
     this.alertCtrl.show('Bienvenido', response.User.custumerName).then(()=> {
       this.clear();
+      this.router.navigate(['home/profile']);
     });
-    
   }
 
   redirectToSignIn() {

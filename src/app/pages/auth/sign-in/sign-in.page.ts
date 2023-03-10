@@ -8,6 +8,8 @@ import { AuthService } from 'src/app/core/services/authService/auth.service';
 import { LoadingControllerService } from 'src/app/core/services/ionic-components/loading-controller.service';
 import { FormsHelper } from '../../../core/helpers/forms.helper';
 import { AlertControllerService } from '../../../core/services/ionic-components/alert-controller.service';
+import { StorageHelper } from '../../../core/helpers/storage.helper';
+import { StorageEnum } from '../../../core/enums/storage.enum';
 
 @Component({
   selector: 'app-sign-in',
@@ -26,7 +28,8 @@ export class SignInPage implements OnInit {
     private authService: AuthService, 
     private loadingCtrl: LoadingControllerService,
     private alertCtrl: AlertControllerService,
-    private router: Router
+    private router: Router,
+    private storage: StorageHelper
     ) { 
 
   }
@@ -58,8 +61,11 @@ export class SignInPage implements OnInit {
     }
   }
 
-  loginSuccess(response: LoginResponse){
-    this.alertCtrl.show('Bienvenido', response.User.custumerName)
+   loginSuccess(response: LoginResponse){
+    this.alertCtrl.show('Bienvenido', response.User.custumerName).then(async ()=> {
+      await this.storage.setStorageKey(StorageEnum.USERDATA, response);
+      this.router.navigate(['home/profile']);
+    })
   }
 
   redirectToSignUp(){

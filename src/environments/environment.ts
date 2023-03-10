@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://api.lancergroup.org/likeride/api'
+  apiUrl: 'https://api.lancergroup.org/likeride/api',
+  urlAvatar: 'https://api.lancergroup.org/likeride/imagenes/avatar/x1/'
+
 };
 
 /*
