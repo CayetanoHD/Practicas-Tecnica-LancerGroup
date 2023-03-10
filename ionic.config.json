@@ -1,0 +1,7 @@
+{
+  "name": "LancerGroup",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
