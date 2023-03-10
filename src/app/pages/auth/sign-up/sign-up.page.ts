@@ -2,12 +2,15 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ResponseCodeEnum } from 'src/app/core/enums/responseCode.enum';
+import { StorageEnum } from 'src/app/core/enums/storage.enum';
 import { FormsHelper } from 'src/app/core/helpers/forms.helper';
+import { GeoLocationHelper } from 'src/app/core/helpers/geoLocationHelper';
 import { LoginResponse } from 'src/app/core/models/loginResponse.model';
 import { UserSignUp } from 'src/app/core/models/userSignUp.model';
 import { AuthService } from 'src/app/core/services/authService/auth.service';
 import { AlertControllerService } from 'src/app/core/services/ionic-components/alert-controller.service';
 import { LoadingControllerService } from 'src/app/core/services/ionic-components/loading-controller.service';
+import { StorageHelper } from '../../../core/helpers/storage.helper';
 
 @Component({
   selector: 'app-sign-up',
@@ -34,7 +37,9 @@ export class SignUpPage implements OnInit, OnDestroy {
     private authService: AuthService,
     private loadingCtrl: LoadingControllerService,
     private alertCtrl: AlertControllerService,
-    private router: Router
+    private router: Router,
+    private geoHelper: GeoLocationHelper,
+    private storage: StorageHelper
   ) {
 
   }
@@ -138,11 +143,14 @@ export class SignUpPage implements OnInit, OnDestroy {
     }
   }
 
-  signUpSuccess(response: LoginResponse) {
+  async signUpSuccess(response: LoginResponse) {
+    let location = await this.geoHelper.printCurrentPosition();
+    await this.storage.setStorageKey(StorageEnum.GEOLOCATION, location);
+    await this.storage.setStorageKey(StorageEnum.USERDATA, response);
     this.alertCtrl.show('Bienvenido', response.User.custumerName).then(()=> {
       this.clear();
+      this.router.navigate(['home/profile']);
     });
-    
   }
 
   redirectToSignIn() {

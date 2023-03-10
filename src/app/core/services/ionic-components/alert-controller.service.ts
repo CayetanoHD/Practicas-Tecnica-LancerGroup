@@ -26,7 +26,7 @@ export class AlertControllerService {
             mode:'ios',
             buttons: [
                 {
-                    text: 'No',
+                    text: 'Not',
                     role: 'cancel',
                     cssClass: 'secondary',
                     handler: () => {

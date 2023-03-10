@@ -1,0 +1,24 @@
+<ion-card mode="ios">
+  <ion-card-header>
+    <ion-card-subtitle>Bienvenido</ion-card-subtitle>
+    <ion-card-title>{{userInfo.User.custumerName || 'N/A'}}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-row>
+      <ion-col size="12" class="center">
+        <ion-avatar>
+          <img class="" [src]="userInfo.User.profilePic | domSanitizer" />
+        </ion-avatar>
+      </ion-col>
+    </ion-row>
+    <div>
+      Email:
+    <p style="color: #000;">{{userInfo.User.userEmail || 'N/A'}}</p>
+    </div>
+
+    <div>
+      Phone Number:
+    <p style="color: #000;">{{userInfo.User.phoneNumber || 'N/A'}}</p>
+    </div>
+  </ion-card-content>
+</ion-card>

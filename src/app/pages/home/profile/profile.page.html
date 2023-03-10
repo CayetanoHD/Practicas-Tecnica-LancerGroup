@@ -1,0 +1,16 @@
+
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Your Profile</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logOut()" color="danger">
+        <ion-icon slot="end" name="log-out-outline"></ion-icon>
+        Salir
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<app-profile-info *ngIf="userModel" [userInfo]="userModel"></app-profile-info>
+</ion-content>
