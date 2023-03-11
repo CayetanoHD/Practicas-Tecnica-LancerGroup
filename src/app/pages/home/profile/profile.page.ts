@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { StorageEnum } from 'src/app/core/enums/storage.enum';
 import { StorageHelper } from 'src/app/core/helpers/storage.helper';
 import { LoginResponse } from 'src/app/core/models/loginResponse.model';
