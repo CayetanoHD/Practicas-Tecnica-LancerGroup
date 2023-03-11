@@ -76,7 +76,7 @@ export class SignInPage implements OnInit {
     if (this.platform.getPlatformName() == 'web') {
       this.alertCtrl.error(
         'Biometric is not available',
-        'Biometric is not available in web version'
+        'Biometric is not available in web version, but you can continue'
       ).then(()=> {
         this.router.navigate(['home/profile'])
       });

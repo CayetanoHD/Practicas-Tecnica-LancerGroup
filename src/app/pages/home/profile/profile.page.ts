@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage {
 
   userModel: LoginResponse
 
@@ -20,8 +20,9 @@ export class ProfilePage implements OnInit {
     private router: Router
   ) { }
 
-  async ngOnInit() {
+  async ionViewWillEnter() {
     this.userModel = await this.storage.getStorageKey(StorageEnum.USERDATA);
+    console.log(this.userModel);
   }
 
   async logOut(){
