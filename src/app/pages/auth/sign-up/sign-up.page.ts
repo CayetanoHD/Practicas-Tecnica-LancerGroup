@@ -108,10 +108,8 @@ export class SignUpPage implements OnInit, OnDestroy {
   }
 
   containsLettersAndNumber(value: string) {
-    const numbers = /^[0-9]/.test(value);
-    const letters = /[-Za-z0-9]/.test(value);
-
-    return numbers && letters;
+    const result = /^(?=.*[a-zA-Z])(?=.*\d)/.test(value);
+    return result
   }
 
   signUp() {

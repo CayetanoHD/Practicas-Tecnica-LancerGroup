@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="bg mb-5 animate__animated animate__zoomIn">
+<ion-content class="bg mb-5 ">
 
   <ion-card class="ion-no-margin">
     <!-- <ion-img src="assets/images/header1.png">
@@ -23,7 +23,7 @@
     </ion-card-header>
     <ion-card-content>
 
-      <form [formGroup]="form">
+      <form [formGroup]="form" class="animate__animated animate__zoomIn">
         <ion-row>
           <ion-col size="12" class="">
             <ion-input style="color: #000 ;" [ngClass]="getClass(f['userName'])"  minLength="4" maxLength="30" formControlName="userName" class="px-1" type="text"
@@ -44,7 +44,7 @@
           </ion-col>
           <small class="text-danger">{{f['userEmail'].errors?.['notValid']}}</small>
 
-          <ion-col size="12" class="">
+          <ion-col size="12" class="my-2">
             <ion-input style="color: #000 ;" [ngClass]="getClass(f['userPhoneNumber'])"  minLength="10" formControlName="userPhoneNumber" class="px-1" type="text"
               placeholder="Phone Number">
             </ion-input>

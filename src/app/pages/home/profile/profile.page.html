@@ -5,12 +5,12 @@
     <ion-buttons slot="end">
       <ion-button (click)="logOut()" color="danger">
         <ion-icon slot="end" name="log-out-outline"></ion-icon>
-        Salir
+        Sign Out
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-<app-profile-info *ngIf="userModel" [userInfo]="userModel"></app-profile-info>
+<ion-content >
+<app-profile-info  *ngIf="userModel" [userInfo]="userModel"></app-profile-info>
 </ion-content>
