@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class ProfilePage {
 
   userModel: LoginResponse
+  tryOut: boolean;
 
   constructor(
     private alertCtrl: AlertControllerService,
@@ -26,11 +27,11 @@ export class ProfilePage {
   }
 
   async logOut(){
-
+    this.tryOut = true;
     this.alertCtrl.confirmation(async ()=> {
       await this.storage.clear();
       this.router.navigate(['auth/sign-in']);
-    }, 'Are you sure to exit?', 'Exit', 'Yes', ()=>{})
+    }, 'Are you sure to exit?', 'Exit', 'Yes', ()=>{this.tryOut = false})
 
   }
 

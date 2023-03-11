@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { CanActivateGuard } from './core/guard/can-activate.guard';
+import { CanDeactivateGuard } from './core/guard/can-deactivate.guard';
 
 const routes: Routes = [
   {
