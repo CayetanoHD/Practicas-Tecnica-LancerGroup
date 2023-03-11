@@ -87,7 +87,7 @@ export class SignInPage implements OnInit {
     if (isAvailable.isAvailable) {
       await this.nativeBiometric
         .verifyIdentity({
-          title: 'LancerGroup App',
+          title: 'LancerGroup App - Put your finger or face',
           description: 'Your biometric data will be used for authentication on this device',
         })
         .then(async () => {

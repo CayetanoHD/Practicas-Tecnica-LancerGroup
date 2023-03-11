@@ -145,7 +145,7 @@ export class SignUpPage implements OnInit, OnDestroy {
     let location = await this.geoHelper.printCurrentPosition();
     await this.storage.setStorageKey(StorageEnum.GEOLOCATION, location);
     await this.storage.setStorageKey(StorageEnum.USERDATA, response);
-    this.alertCtrl.show('Bienvenido', response.User.custumerName).then(()=> {
+    this.alertCtrl.show('Welcome', response.User.custumerName).then(()=> {
       this.clear();
       this.router.navigate(['home/profile']);
     });
